@@ -142,6 +142,7 @@
     <Content Include="Content\CSS\admin.css" />
     <Content Include="Content\CSS\bootstrap-responsive.min.css" />
     <Content Include="Content\CSS\bootstrap.min.css" />
+    <Content Include="Content\CSS\layout.css" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
     <Content Include="Content\Scripts\bootstrap.min.js" />
