@@ -34,6 +34,12 @@
                     <button class="btn btn-info ajax-post confirm" target-form="id" url="@Url.Action("Delete", "Document", new { status = 0 })"><i class="icon-ok-sign icon-white"></i>&nbsp恢复</button>
                 </div>
             }
+            <label class="pull-right">
+                <input aria-controls="example2" type="text" name="title" placeholder="输入关键字按回车搜索" class="search-input form-control none-radius" value="@ViewBag.wd">
+                <a class="sch-btn" href="javascript:;" id="search" url="@Url.Action("Index", "Document", new { type = @HttpContext.Current.Request["type"], status = @HttpContext.Current.Request["status"] })">
+                    <i class="icon-search"></i>
+                </a>
+            </label>
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -57,7 +63,7 @@
                 <tbody aria-relevant="all" aria-live="polite" role="alert">
                     @foreach (var item in Model)
                     {
-                        <tr @if (item.Status == 1) { @Html.Raw(" class='error'")     }>
+                        <tr @if (item.Status == 1) { @Html.Raw(" class='error'")       }>
                             <td>
                                 <input type="checkbox" name="id" class="id" value="@item.ID">
                             </td>

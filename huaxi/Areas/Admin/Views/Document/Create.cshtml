@@ -6,77 +6,55 @@
 }
 
 @Html.Partial("_DocumentLayout")
-<div class="span9" id="content">
-
-    <div class="row-fluid">
-        <!-- block -->
-        <div class="block">
-            <div class="navbar navbar-inner block-header">
-                <div class="muted pull-left">@ViewBag.Title 作者:@User.Identity.Name</div>
-            </div>
-            <div class="block-content collapse in">
-                <div class="span12 form-horizontal">
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true)
-
-                        <fieldset>
-                            <legend>
-                                <button class="btn btn-inverse" onclick="window.location='@Url.Action("Index", "Document", new { type = @HttpContext.Current.Request["type"] })'" type="button"><i class="icon-arrow-left icon-white"></i>&nbsp返回</button>
-                                @Html.HiddenFor(m => m.Document.CateID)
-                                @Html.HiddenFor(m => m.Document.UserName)
-                                @Html.Hidden("type")
-                            </legend>
-
-                            <div class="control-group">
-                                @Html.LabelFor(model => model.Document.Title, new { @class = "control-label" })
-                                <div class="controls">
-                                    @Html.TextBoxFor(model => model.Document.Title, new { @class = "span6" })
-                                    @Html.ValidationMessageFor(model => model.Document.Title)
-                                </div>
-                            </div>
-                            @if (HttpContext.Current.Request["type"] != "3")
-                            {
-                                <div class="control-group">
-                                    @Html.LabelFor(model => model.BeFrom, new { @class = "control-label" })
-                                    <div class="controls">
-                                        @Html.TextBoxFor(model => model.BeFrom, new { @class = "span6" })
-                                        @Html.ValidationMessageFor(model => model.BeFrom)
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    @Html.LabelFor(model => model.Document.Description, new { @class = "control-label" })
-
-                                    <div class="controls">
-                                        @Html.TextAreaFor(model => model.Document.Description, new { @class = "span6" })
-                                        @Html.ValidationMessageFor(model => model.Document.Description)
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                @Html.HiddenFor(model => model.Document.Description, new { Value = "公告" })
-                            }
-                            <div class="control-group">
-                                @Html.LabelFor(model => model.Contents, new { @class = "control-label" })
-                                <div class="controls">
-                                    @Html.TextAreaFor(model => model.Contents, new { @class = "span11", style = "height:300px" })
-                                    @Html.ValidationMessageFor(model => model.Contents)
-                                </div>
-                            </div>
-
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp发布</button>
-                                <button type="reset" class="btn"><i class="icon-trash"></i>&nbsp重置</button>
-                            </div>
-                        </fieldset>
-                    }
-
-                </div>
-            </div>
+<div class="col-md-9">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            @ViewBag.Title 作者:@User.Identity.Name
+            <a href="@Url.Action("Index", "Document", new { type = @HttpContext.Current.Request["type"] })" type="button">&nbsp;&nbsp;返回</a>
         </div>
-        <!-- /block -->
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(m => m.Document.CateID)
+                @Html.HiddenFor(m => m.Document.UserName)
+                @Html.Hidden("type")
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Document.Title, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Document.Title, new { @class = "form-control none-radius", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Document.Title)
+                    </div>
+                    @if (HttpContext.Current.Request["type"] != "3")
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BeFrom, new { @class = "" })
+                            @Html.TextBoxFor(model => model.BeFrom, new { @class = "form-control none-radius" })
+                            @Html.ValidationMessageFor(model => model.BeFrom)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Document.Description, new { @class = "" })
+                            @Html.TextAreaFor(model => model.Document.Description, new { @class = "form-control none-radius" })
+                            @Html.ValidationMessageFor(model => model.Document.Description)
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.HiddenFor(model => model.Document.Description, new { Value = "公告" })
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Contents, new { @class = "" })
+                        @Html.TextAreaFor(model => model.Contents, new { @class = "form-control none-radius", style = "height:300px" })
+                        @Html.ValidationMessageFor(model => model.Contents)
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">发布</button>
+                    <button type="reset" class="btn btn-danger">重置</button>
+                </div>
+            }
+        </div>
     </div>
 </div>
 <script src="~/Content/Scripts/kindeditor/kindeditor-min.js"></script>

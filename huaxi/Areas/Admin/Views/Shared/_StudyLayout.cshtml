@@ -1,0 +1,29 @@
+﻿<div class="col-md-3">
+
+    <label>就业指导</label>
+    <ul class="list-group">
+        @foreach (huaxi.Category cate in (List<huaxi.Category>)ViewBag.ShareCate)
+        {
+            <a href="@Url.Action("Index", new { type = @cate.ID })" class="list-group-item sideNav" select="type = @cate.ID"> @cate.Display</a>
+        }
+    </ul>
+    <label>资源共享</label>
+    <ul class="list-group">
+        @foreach (huaxi.Category cate in (List<huaxi.Category>)ViewBag.ShareCate)
+        {
+            <a href="@Url.Action("Index", new { type = @cate.ID })" class="list-group-item sideNav" select="type = @cate.ID"> @cate.Display</a>
+        }
+        <a href="#" class="list-group-item sideNav" select="type = #">未审核</a>
+    </ul>
+    <label>培训信息</label>
+    <ul class="list-group">
+        @foreach (huaxi.Category cate in (List<huaxi.Category>)ViewBag.TrainningCate)
+        {
+            <a href="@Url.Action("Index", new { type = @cate.ID })" class="list-group-item sideNav" select="type = @cate.ID"> @cate.Display</a>
+        }
+    </ul>
+    <label>其他</label>
+    <ul class="list-group">
+        <a href="@Url.Action("Index", new { status = -1 })" class="list-group-item sideNav" select="status=-1">&nbsp回收站</a>
+    </ul>
+</div>

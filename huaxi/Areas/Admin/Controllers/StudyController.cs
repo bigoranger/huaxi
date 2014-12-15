@@ -39,7 +39,7 @@ namespace huaxi.Areas.Admin.Controllers
                 titleStr = string.Format("Title like '%{0}%'", title);
                 ListWhere.Add(titleStr);
             }
-
+            ViewBag.wd = title;
             string[] arrWhere = ListWhere.ToArray();
             IEnumerable<ViewArticle> List = ViewArticleDAL.ListByPage(page, 10, "UpdateTime", true, arrWhere);
             ViewBag.Count = ViewArticleDAL.ListCount(arrWhere);
