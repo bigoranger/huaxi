@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7029F566-B25F-478E-85C7-5ADFA7C3CE42}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>huaxi.DAL</RootNamespace>
+    <AssemblyName>huaxi.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CategoryDAL.cs" />
+    <Compile Include="CommentDAL.cs" />
+    <Compile Include="CreditRulesDAL.cs" />
+    <Compile Include="DocumentsDAL.cs" />
+    <Compile Include="Document_ArticleDAL.cs" />
+    <Compile Include="Document_DownloadDAL.cs" />
+    <Compile Include="Document_GoodsDAL.cs" />
+    <Compile Include="Document_TakeOutDAL.cs" />
+    <Compile Include="FilesDAL.cs" />
+    <Compile Include="ForumDAL.cs" />
+    <Compile Include="Forum_PostDAL.cs" />
+    <Compile Include="Forum_Post_ReplyDAL.cs" />
+    <Compile Include="Helper\GenericSQLGenerator.cs" />
+    <Compile Include="Helper\SqlHelper.cs" />
+    <Compile Include="LogsDAL.cs" />
+    <Compile Include="MessageDAL.cs" />
+    <Compile Include="PictureDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestuarantDAL.cs" />
+    <Compile Include="UsersDAL.cs" />
+    <Compile Include="Users_RolesDAL.cs" />
+    <Compile Include="Users_RolesInRulesDAL.cs" />
+    <Compile Include="Users_RulesDAL.cs" />
+    <Compile Include="ViewArticleDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\huaxi.Model\huaxi.Model.csproj">
+      <Project>{59a26367-4ec3-4dd3-b15d-2f95a59c9376}</Project>
+      <Name>huaxi.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

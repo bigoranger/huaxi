@@ -1,0 +1,188 @@
+﻿@model IEnumerable<huaxi.ViewArticle>
+@using HtmlPaginationBar;
+
+@{
+    ViewBag.Title = "学习信息列表";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="span3" id="sidebar">
+    <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
+
+        <li href="#dashboard-menu1" data-toggle="collapse">
+            <a href="#"><i class="icon-chevron-down"></i>&nbsp就业指导</a>
+        </li>
+        <ul id="dashboard-menu1" class="nav nav-list chevron-sidenav collapse in">
+            @foreach (huaxi.Category cate in (List<huaxi.Category>)ViewBag.GuideCate)
+            {
+                <li><a href="@Url.Action("Index", "Study", new { type = @cate.ID })"><i class="icon-tag"></i>&nbsp @cate.Display</a></li>
+            }
+        </ul>
+        <li href="#dashboard-menu2" data-toggle="collapse">
+            <a href="#"><i class="icon-chevron-down"></i>&nbsp资源共享</a>
+        </li>
+        <ul id="dashboard-menu2" class="nav nav-list chevron-sidenav collapse in">
+            <li>
+                <a href="#"><i class="icon-tags"></i>&nbsp未审核</a>
+            </li>
+            @foreach (huaxi.Category cate in (List<huaxi.Category>)ViewBag.ShareCate)
+            {
+                <li><a href="@Url.Action("Index", new { type = @cate.ID })"><i class="icon-tag"></i>&nbsp @cate.Display</a></li>
+            }
+        </ul>
+        <li href="#dashboard-menu3" data-toggle="collapse">
+            <a href="#"><i class="icon-chevron-down"></i>&nbsp培训信息</a>
+        </li>
+        <ul id="dashboard-menu3" class="nav nav-list chevron-sidenav collapse in">
+            @foreach (huaxi.Category cate in (List<huaxi.Category>)ViewBag.TrainningCate)
+            {
+                <li><a href="@Url.Action("Index", new { type = @cate.ID })"><i class="icon-tag"></i>&nbsp @cate.Display</a></li>
+            }
+        </ul>
+    </ul>
+    <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
+
+        <li>
+            <a href="@Url.Action("Index", new { status = -1 })" class="sideNav" select="status=-1"><i class="icon-chevron-right"></i><i class="icon-trash"></i>&nbsp回收站</a>
+        </li>
+    </ul>
+</div>
+
+<!--/span-->
+<div class="span9" id="content">
+    <div class="row-fluid">
+        <!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">@ViewBag.Title</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                        <div class="row">
+                            <div class="span6">
+                                <div class="table-toolbar">
+                                    @if (HttpContext.Current.Request["status"] != "-1")
+                                    {
+                                        
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("Create", new { type = @HttpContext.Current.Request["type"] })">
+                                                <button class="btn btn-success"><i class="icon-plus icon-white"></i>&nbsp添加文章</button></a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-danger ajax-post confirm" target-form="id" url="@Url.Action("Delete", "Document", new { type = @HttpContext.Current.Request["type"] })"><i class="icon-remove icon-white"></i>&nbsp删除</button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-info ajax-post confirm" target-form="id" url="@Url.Action("Delete", "Document", new { status = 0, type = @HttpContext.Current.Request["type"] })"><i class="icon-ok-sign icon-white"></i>&nbsp启用</button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-warning ajax-post confirm" target-form="id" url="@Url.Action("Delete", "Document", new { status = 1, type = @HttpContext.Current.Request["type"] })"><i class="icon-minus-sign icon-white"></i>&nbsp禁用</button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("Create", new { type = @HttpContext.Current.Request["type"] })">
+                                                <button class="btn btn-primary"><i class="icon-tag icon-white"></i>&nbsp添加分类</button></a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="btn-group">
+                                            <button class="btn btn-danger ajax-post confirm" target-form="id" url="@Url.Action("Destroy")"><i class="icon-trash icon-white"></i>&nbsp彻底删除</button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-info ajax-post confirm" target-form="id" url="@Url.Action("Delete", "Document", new { status = 0 })"><i class="icon-ok-sign icon-white"></i>&nbsp恢复</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <div id="example2_filter" class="dataTables_filter">
+                                    <label>
+                                        <input aria-controls="example2" type="text" name="title" placeholder="输入关键字按回车搜索" class="search-input">
+                                        <a class="sch-btn" href="javascript:;" id="search"  url="@Url.Action("Index", "Document", new { type = @HttpContext.Current.Request["type"], status = @HttpContext.Current.Request["status"] })"><i class="icon-search"></i></a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table aria-describedby="example2_info" class="table table-striped table-bordered dataTable" id="example2" border="0" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr role="row">
+                                    <th style="width: 10px">
+                                        <input class="check-all" type="checkbox"></th>
+                                    <th>编号</th>
+                                    <th>标题</th>
+                                    <th>最后更新</th>
+                                    <th>分类</th>
+                                    <th>状态</th>
+                                    <th>浏览</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+
+                            <tbody aria-relevant="all" aria-live="polite" role="alert">
+                                @foreach (var item in Model)
+                                {
+                                    <tr
+                                        @if (item.Status == 1)
+                                        {
+                                            @Html.Raw(" class='error'")
+                                        }
+                                        >
+                                        <td>
+                                            <input  type="checkbox" name="id" class="id" value="@item.ID">
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UpdateTime)
+                                        </td>
+                                        @if (HttpContext.Current.Request["status"] == "-1")
+                                        {
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Cate)
+                                            </td>
+                                        }
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StatusName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Views)
+                                        </td>
+                                        <td>
+                                            @if (HttpContext.Current.Request["status"] != "-1")
+                                            {
+                                                @Html.ActionLink("编辑", "Edit", new { id = item.ID, type = @HttpContext.Current.Request["type"] })
+                                                <label>|</label>
+                                                @Html.ActionLink("删除", "Delete", new { id = item.ID, type = @HttpContext.Current.Request["type"] })
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("彻底删除", "Destroy", new { id = item.ID })
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="span6">
+                                <div id="example2_info" class="dataTables_info">当前为第 @ViewBag.StartNum 到 @ViewBag.EndNum 条 总共 @ViewBag.Count 条</div>
+                            </div>
+                            <div class="span6">
+                                <div class="dataTables_paginate paging_bootstrap pagination">
+                                    @*@Html.PaginationBar(new PaginationBarBilder(@Url.Action("Index") + "?page={0}", @ViewBag.PageCount, @ViewBag.Page))*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /block -->
+    </div>
+
+</div>

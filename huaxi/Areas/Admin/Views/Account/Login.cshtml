@@ -1,0 +1,29 @@
+﻿@model huaxi.Areas.Admin.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<body id="login">
+    <div class="container">
+        <div class="form-signin">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <h2 class="form-signin-heading">管理后台登录</h2>
+                @Html.ValidationMessageFor(model => model.Name)
+                @Html.TextBoxFor(model => model.Name, new { @class = "input-block-level", placeholder = "账号" })
+                @Html.ValidationMessageFor(model => model.Password)
+                @Html.PasswordFor(model => model.Password, new { @class = "input-block-level", placeholder = "密码" })
+                <label class="checkbox">
+                    <input type="checkbox" name="isRemember" value="true">
+                    记住我
+                </label>
+                <button class="btn btn-large btn-primary" type="submit">进入</button>
+            }
+        </div>
+    </div>
+    <!-- /container -->
+</body>
