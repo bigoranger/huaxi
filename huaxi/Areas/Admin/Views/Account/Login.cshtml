@@ -19,11 +19,13 @@
                     <div class="modal-body">
                         <div class="row form-group">
                             <div class="col-sm-12">
+                                @Html.ValidationMessageFor(model => model.Name)
                                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control none-radius", required = "required", placeholder = "账号" })
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12">
+                                @Html.ValidationMessageFor(model => model.Name)
                                 @Html.PasswordFor(model => model.Password, new { @class = "form-control none-radius", required = "required", placeholder = "密码" })
                             </div>
                         </div>
