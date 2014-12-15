@@ -4,3 +4,11 @@
 }
 
 <div>@Html.ActionLink("时讯", "index", new { controller = "Document" })</div>
+<!-- 
+    <a href="/Admin/Document">时讯</a> 
+
+    Html.ActionLink("linkText","actionName",routeValues,htmlAttributes)
+    htmlAttribute可以设置<a>标签的属性，
+    如 Html.ActionLink("detail","Detail",new{id=1},new{ target="_blank"})
+    会生成 <a href="Products/Detail/1" target="_blank">detail</a>
+-->
