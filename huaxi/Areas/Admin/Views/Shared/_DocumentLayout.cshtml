@@ -1,19 +1,13 @@
-﻿<div class="span3" id="sidebar">
-    <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-        <li class="active">
-            <a href="@Url.Action("Index", "Document", new { type = 1 })" class="sideNav" select="type=1"><i class="icon-chevron-right"></i>校内新闻</a>
-        </li>
-        <li>
-            <a href="@Url.Action("Index", "Document", new { type = 2 })" class="sideNav" select="type=2"><i class="icon-chevron-right"></i>专卖推送</a>
-        </li>
-        <li>
-            <a href="@Url.Action("Index", "Document", new { type = 3 })" class="sideNav" select="type=3"><i class="icon-chevron-right"></i>公告栏</a>
-        </li>
+﻿
+<div class="col-md-3">
+    <label>新闻列表</label>
+    <ul class="list-group">
+        <a href="@Url.Action("Index", "Document", new { type = 1 })" class="list-group-item sideNav" select="type=1"><i class="icon-chevron-right"></i>校内新闻</a>
+        <a href="@Url.Action("Index", "Document", new { type = 2 })" class="list-group-item sideNav" select="type=2"><i class="icon-chevron-right"></i>专卖推送</a>
+        <a href="@Url.Action("Index", "Document", new { type = 3 })" class="list-group-item sideNav" select="type=3"><i class="icon-chevron-right"></i>公告栏</a>
     </ul>
-    <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-
-        <li>
-            <a href="@Url.Action("Index", "Document", new { status = -1 })" class="sideNav" select="status=-1"><i class="icon-chevron-right"></i><i class="icon-trash"></i>&nbsp回收站</a>
-        </li>
+    <label>其他操作</label>
+    <ul class="list-group">
+        <a href="@Url.Action("Index", "Document", new { status = -1 })" class="list-group-item sideNav" select="status=-1"><i class="icon-chevron-right"></i><i class="icon-trash"></i>&nbsp回收站</a>
     </ul>
 </div>

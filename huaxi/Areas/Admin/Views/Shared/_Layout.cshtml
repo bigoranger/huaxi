@@ -14,7 +14,7 @@
 <body>
     <div id="wrap">
         @Html.Partial("_NavPartial")
-        <div class="container">
+        <div class="container-full">
             @RenderBody()
         </div>
     </div>
@@ -24,16 +24,6 @@
             <p> Powered By 橘子团队 </p>
         </div>
     </footer>
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-    <script src="~/Content/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="~/Content/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Content/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Content/assets/scripts.js"></script>
-    <script src="~/Content/Scripts/common.js"></script>
     <script src="http://libs.baidu.com/jquery/1.8.0/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -42,6 +32,15 @@
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    <script src="/Content/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="/Content/Scripts/jquery.validate.min.js"></script>
+    <script src="/Content/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Content/assets/scripts.js"></script>
+    <script src="/Content/Scripts/common.js"></script>
     @RenderSection("Js", false)
     @RenderSection("NavJs", false)
 </body>

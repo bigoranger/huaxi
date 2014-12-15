@@ -8,9 +8,9 @@ html,body{
     font-family: "Microsoft YaHei","SimSun"
 }
 
-*::selection{color:#fff;background:#fa7d3c;}
-*::-moz-selection{color:#fff;background:#fa7d3c;}
-*::-webkit-selection{color:#fff;background:#fa7d3c;}
+*::selection{color:#fff;background:#18ba60;}
+*::-moz-selection{color:#fff;background:#18ba60;}
+*::-webkit-selection{color:#fff;background:#18ba60;}
 
 #wrap{
 	min-height: 100%; 
@@ -48,11 +48,11 @@ blockquote{
 }
 
 a,a.list-group-item,.navbar .navbar-nav li a,.navbar .navbar-brand{
-   /* color: #555;*/
+    color: #555;
 }
 
 a:hover,.navbar-default .navbar-nav .active a,a.list-group-item:hover,.navbar .navbar-nav li a:hover,.navbar .navbar-brand:hover{
-   /* color: #fa7d3c;*/
+    color: #18ba60;
     text-decoration: none;
 }
 
@@ -62,8 +62,8 @@ a:hover,.navbar-default .navbar-nav .active a,a.list-group-item:hover,.navbar .n
 .pagination>.active>span:hover, 
 .pagination>.active>a:focus, 
 .pagination>.active>span:focus{
-	background-color: #fa7d3c;
-	border-color: #fa7d3c;
+	background-color: #18ba60;
+	border-color: #18ba60;
 }
 
 .pagination>li>a,
@@ -72,7 +72,7 @@ a:hover,.navbar-default .navbar-nav .active a,a.list-group-item:hover,.navbar .n
 .pagination>li>span:hover, 
 .pagination>li>a:focus, 
 .pagination>li>span:focus{
-	color: #fa7d3c;
+	color: #18ba60;
 }
 
 .affix{
@@ -161,7 +161,7 @@ a.list-group-item.active>.badge, .nav-pills>.active>a>.badge{
     line-height: 1;
     color: #fff;
     text-align: center;
-    background-color: #fa7d3c;
+    background-color: #18ba60;
     border-radius: 50%;
 }
 
@@ -177,7 +177,7 @@ a.list-group-item.active>.badge, .nav-pills>.active>a>.badge{
 
 /*商品列表模块*/
 a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active{
-	border-color: #fa7d3c;
+	border-color: #18ba60;
 }
 
 .caption {
@@ -398,14 +398,14 @@ footer {
 }
 
 .board span.round-tabs.three{
-    color: #fa7d3c;
-    border: 2px solid #fa7d3c;
+    color: #18ba60;
+    border: 2px solid #18ba60;
 }
 
 .board li.active span.round-tabs.three{
     background: #fff !important;
     border: 2px solid #ddd;
-    color: #fa7d3c;
+    color: #18ba60;
 }
 
 .board span.round-tabs.four{
@@ -653,7 +653,7 @@ footer {
 
 /* 个人中心 */
 .profile {
-    background-color: #fa7d3c;
+    background-color: #18ba60;
     border: 1px solid #ff766c;
 }
 
@@ -693,7 +693,7 @@ footer {
     background-color: #F8F7F5;
     border-color: #ddd;
     color: #555;
-    border-left: 3px solid #fa7d3c;
+    border-left: 3px solid #18ba60;
 }
 
 .btn-small{
@@ -773,7 +773,7 @@ footer {
 	color: #555555;
 	cursor: default;
 	background-color: #ffffff;
-	border-left: 5px solid #fa7d3c;
+	border-left: 5px solid #18ba60;
 	border-bottom-color: transparent;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -814,7 +814,7 @@ footer {
 }
 
 .w a h6:hover {
-	color: #fa7d3c;
+	color: #18ba60;
 }	
 	
 .w .dl-horizontal dd{
@@ -1003,16 +1003,21 @@ form{
         bottom: 1px;
     }
 .btnnavsera:hover{
-    color: #fa7d3c;
+    color: #18ba60;
     background-color: transparent;
 
 }
 .btnnavsera:active{
-    color: #fa7d3c;
+    color: #18ba60;
     background-color: transparent;
      border: 0px;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 .thprize{min-width: 50px;}
+.container-full,
+.countinfo{
+    padding-left:3%;
+    padding-right:3%;
+}
 

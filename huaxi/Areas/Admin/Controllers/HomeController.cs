@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace huaxi.Areas.Admin.Controllers
 {
+        [Authorize(Roles = "1")]
     public class HomeController : Controller
     {
         //
