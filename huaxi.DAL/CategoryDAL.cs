@@ -27,8 +27,7 @@ namespace huaxi
         /// <returns>插入是否成功</returns>
         public static bool Insert(Category model)
         {
-            int count = SqlHelper.ExecuteNonQuery(@"INSERT INTO [Category]([ID], [Name], [Display], [Status], [PID]) VALUES(@ID, @Name, @Display, @Status, @PID)"
-            , new SqlParameter("@ID", model.ID)
+            int count = SqlHelper.ExecuteNonQuery(@"INSERT INTO [Category]( [Name], [Display], [Status], [PID]) VALUES( @Name, @Display, @Status, @PID)"
             , new SqlParameter("@Name", model.Name)
             , new SqlParameter("@Display", model.Display)
             , new SqlParameter("@Status", model.Status)

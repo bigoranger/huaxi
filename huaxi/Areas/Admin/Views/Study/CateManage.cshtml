@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "学习信息列表";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_StudyLayout")
+<div class="col-md-9">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="btn-group">
+                <button class="btn btn-success addcate" title="添加分类" >添加分类</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-danger ajax-post confirm" target-form="id" url="@Url.Action("DeleteCate", "Study", new { type = @HttpContext.Current.Request["type"] })">
+                    删除
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr role="row">
+                        <th style="width: 10px">
+                            <input class="check-all" type="checkbox">
+                        </th>
+                        <th>编号</th>
+                        <th>父分类</th>
+                        <th>标题</th>
+                        <th>标识</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody aria-relevant="all" aria-live="polite" role="alert">
+                    @foreach (var v in ViewBag.GuideCate)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="id" class="id" value="@v.ID">
+                            </td>
+                            <td>@v.ID</td>
+                            <td>就业指导</td>
+                            <td>@v.Display</td>
+                            <td>@v.Name</td>
+                            <td>
+                                <button class="btn btn-info" url="@Url.Action("GetCateById", "Study", new { id = @v.ID })">
+                                    编辑
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var v in ViewBag.ShareCate)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="id" class="id" value="@v.ID">
+                            </td>
+                            <td>@v.ID</td>
+                            <td>资源共享</td>
+                            <td>@v.Display</td>
+                            <td>@v.Name</td>
+                            <td>
+                                <button class="btn btn-info" url="@Url.Action("GetCateById", "Study", new { id = @v.ID })">
+                                    编辑
+                                </button>
+                            </td>
+                        </tr>
+                    }  @foreach (var v in ViewBag.TrainningCate)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="id" class="id" value="@v.ID">
+                            </td>
+                            <td>@v.ID</td>
+                            <td>培训信息</td>
+                            <td>@v.Display</td>
+                            <td>@v.Name</td>
+                            <td>
+                                <button class="btn btn-info" url="@Url.Action("GetCateById", "Study", new { id = @v.ID })">
+                                    编辑
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+                <!-- 添加分类modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title hightlight" id="addModalLabel">添加分类</h4>
+            </div>
+            <form id="cateform" class="form-horizontal" action="@Url.Action("CreateCate")" method="post" onsubmit="return ajaxsubmit()">
+                <input type="hidden" value="" id="ID" name="ID" />
+                <input type="hidden" value="add" id="modif" name="modif" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">父分类</label>
+                        <div class="col-sm-10">
+                            <select class="form-control none-radius" id="PID" name="PID">
+                                @foreach (var v in ViewBag.Cate)
+                                {
+                                    <option value="@v.ID">@v.Display</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="Display" id="Display" class="form-control none-radius" placeholder="标题" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">标识</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="Name" id="Name" class="form-control none-radius" placeholder="标识" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    <button id="submitaddress" type="submit" class="btn btn-primary" data-loading-text="提交中..." autocomplete="off">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Js{
+   <script>
+       $(function () {
+           $('.addcate').click(function () {
+               $('#addModalLabel').html('添加分类');
+               $('#modif').val('add');
+               $('#addModal').modal('show');
+           });
+       });
+       //异步提交表单
+       function ajaxsubmit() {
+           var form = $("form");
+           var $btn = form.find('button[type="submit"]').button('loading');
+           $.ajax({
+               type: form.attr("method"),
+               url: form.attr("action"),
+               data: form.serialize(),
+               beforeSend: function () {
+                   loading();
+               },
+               error: function (request) {
+                   showerrormsg('网络连接失败', 100, 1000);
+                   $btn.button('reset');
+               },
+               success: function (data) {
+                   if (data.status != 1) {
+                       showerrormsg(data.info, 100, 1000);
+                   }
+                   else {
+                       showsuccessmsg('操作成功', 100, 1000);
+                       setTimeout(function () {
+                           window.location.href = window.location.href;
+                       }, 300);
+                   }
+               },
+               complete: function () {
+                   $("#load").remove();
+                   $btn.button('reset');
+                   form[0].reset();
+                   $('#addModal').modal('hide');
+               }
+           });
+           return false;
+       }
+    </script>
+}

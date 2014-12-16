@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace huaxi.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="1")]
     public class StudyController : Controller
     {
 
@@ -17,10 +17,7 @@ namespace huaxi.Areas.Admin.Controllers
         int[] typeArr = { 7, 9, 10 };
         public ActionResult Index(int type = 7, int page = 1, string title = null, int status = 0)
         {
-            ViewBag.GuideCate = CategoryModel.ListCateByID(typeArr[0]);
-            ViewBag.ShareCate = CategoryModel.ListCateByID(typeArr[1]);
-            ViewBag.TrainningCate = CategoryModel.ListCateByID(typeArr[2]);
-
+            GetCateList();
             List<string> ListWhere = new List<string>();
             string typeStr;
             string titleStr;
@@ -48,6 +45,17 @@ namespace huaxi.Areas.Admin.Controllers
             ViewBag.EndNum = page * 10 < ViewBag.Count ? page * 10 : ViewBag.Count;
             ViewBag.Page = page;
             return View(List);
+        }
+        public ActionResult CateManage() {
+            GetCateList();
+            ViewBag.Cate = CategoryModel.ListCateByID(8).ToList();
+            return View();
+        }
+        private void GetCateList()
+        {
+            ViewBag.GuideCate = CategoryModel.ListCateByID(typeArr[0]).ToList();
+            ViewBag.ShareCate = CategoryModel.ListCateByID(typeArr[1]).ToList();
+            ViewBag.TrainningCate = CategoryModel.ListCateByID(typeArr[2]).ToList();
         }
 
         public ActionResult Create()
@@ -77,6 +85,14 @@ namespace huaxi.Areas.Admin.Controllers
         public ActionResult Edit(ArticleModel model)
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult CreateCate(Category model,string modif="add") {
+
+            string msg = "";
+            model.Status = 0;
+            int st=CategoryModel.Insert(model,ref msg)?1:0;
+            return Json(new {status=st,info=msg });
         }
     }
 }

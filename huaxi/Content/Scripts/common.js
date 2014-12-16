@@ -11,8 +11,9 @@
     /*navselect*/
     $(".topNav").each(function () {
         var _host = window.location.pathname.toLocaleLowerCase();
+        _host = 'http://' + _host;
         var _url = $(this).attr('href').toLocaleLowerCase();
-        if (_host==_url) {
+        if (_host.indexOf(_url,1)>0||_host==_url) {
             $(".topNav").parent().removeClass('active');
             $(this).parent().addClass('active');
             return true;
@@ -91,7 +92,13 @@
     })
 
 })
-
+function loading() {
+    $("#load").remove();
+    $("body").append('<div  id="load" style="z-index:99999; position:fixed; left:45%; top:30%"><img src="loading.gif" /></div>');
+}
+function removeloading() {
+    $("#load").remove();
+}
 /*分页样式*/
 function initPagination(selector) {
     selector = selector || '.page';
