@@ -6,14 +6,29 @@
 <div class="col-md-9">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <div class="btn-group">
-                <button class="btn btn-success addcate" title="添加分类" >添加分类</button>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-danger ajax-post confirm" target-form="id" url="@Url.Action("DeleteCate", "Study", new { type = @HttpContext.Current.Request["type"] })">
-                    删除
-                </button>
-            </div>
+
+            @if (Convert.ToInt32(HttpContext.Current.Request["status"]) == -1)
+            {
+                <div class="btn-group">
+                    <button class="btn btn-danger ajax-post confirm" target-form="id" url="@Url.Action("DestroyCate")"><i class="icon-trash icon-white"></i>&nbsp彻底删除</button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-info ajax-post confirm" target-form="id" url="@Url.Action("DeleteCate",  new { status = 0 })"><i class="icon-ok-sign icon-white"></i>&nbsp恢复</button>
+                </div>
+            }
+            else
+            {
+
+                <div class="btn-group">
+                    <button class="btn btn-success addcate" title="添加分类">添加分类</button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-danger ajax-post confirm" target-form="id" url="@Url.Action("DeleteCate", "Study", new { type = @HttpContext.Current.Request["type"] })">
+                        删除分类
+                    </button>
+                </div>
+            }
+
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -30,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody aria-relevant="all" aria-live="polite" role="alert">
-                    @foreach (var v in ViewBag.GuideCate)
+                    @foreach (var v in ViewBag.ListGuideCate)
                     {
                         <tr>
                             <td>
@@ -41,13 +56,13 @@
                             <td>@v.Display</td>
                             <td>@v.Name</td>
                             <td>
-                                <button class="btn btn-info" url="@Url.Action("GetCateById", "Study", new { id = @v.ID })">
+                                <button class="btn btn-info editbtn" url="@Url.Action("GetCateById", new { id = @v.ID })">
                                     编辑
                                 </button>
                             </td>
                         </tr>
                     }
-                    @foreach (var v in ViewBag.ShareCate)
+                    @foreach (var v in ViewBag.ListShareCate)
                     {
                         <tr>
                             <td>
@@ -58,12 +73,12 @@
                             <td>@v.Display</td>
                             <td>@v.Name</td>
                             <td>
-                                <button class="btn btn-info" url="@Url.Action("GetCateById", "Study", new { id = @v.ID })">
+                                <button class="btn btn-info editbtn" url="@Url.Action("GetCateById", new { id = @v.ID })">
                                     编辑
                                 </button>
                             </td>
                         </tr>
-                    }  @foreach (var v in ViewBag.TrainningCate)
+                    }  @foreach (var v in ViewBag.ListTrainningCate)
                     {
                         <tr>
                             <td>
@@ -74,7 +89,7 @@
                             <td>@v.Display</td>
                             <td>@v.Name</td>
                             <td>
-                                <button class="btn btn-info" url="@Url.Action("GetCateById", "Study", new { id = @v.ID })">
+                                <button class="btn btn-info editbtn" url="@Url.Action("GetCateById", new { id = @v.ID })">
                                     编辑
                                 </button>
                             </td>
@@ -85,7 +100,7 @@
         </div>
     </div>
 </div>
-                <!-- 添加分类modal -->
+<!-- 添加分类modal -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -96,7 +111,7 @@
                 </button>
                 <h4 class="modal-title hightlight" id="addModalLabel">添加分类</h4>
             </div>
-            <form id="cateform" class="form-horizontal" action="@Url.Action("CreateCate")" method="post" onsubmit="return ajaxsubmit()">
+            <form id="cateform" class="form-horizontal" action="@Url.Action("SaveCate")" method="post" onsubmit="return ajaxsubmit()">
                 <input type="hidden" value="" id="ID" name="ID" />
                 <input type="hidden" value="add" id="modif" name="modif" />
                 <div class="modal-body">
@@ -106,7 +121,7 @@
                             <select class="form-control none-radius" id="PID" name="PID">
                                 @foreach (var v in ViewBag.Cate)
                                 {
-                                    <option value="@v.ID">@v.Display</option>
+                                    <option  value="@v.ID">@v.Display</option>
                                 }
                             </select>
                         </div>
@@ -133,48 +148,90 @@
     </div>
 </div>
 @section Js{
-   <script>
-       $(function () {
-           $('.addcate').click(function () {
-               $('#addModalLabel').html('添加分类');
-               $('#modif').val('add');
-               $('#addModal').modal('show');
-           });
-       });
-       //异步提交表单
-       function ajaxsubmit() {
-           var form = $("form");
-           var $btn = form.find('button[type="submit"]').button('loading');
-           $.ajax({
-               type: form.attr("method"),
-               url: form.attr("action"),
-               data: form.serialize(),
-               beforeSend: function () {
-                   loading();
-               },
-               error: function (request) {
-                   showerrormsg('网络连接失败', 100, 1000);
-                   $btn.button('reset');
-               },
-               success: function (data) {
-                   if (data.status != 1) {
-                       showerrormsg(data.info, 100, 1000);
-                   }
-                   else {
-                       showsuccessmsg('操作成功', 100, 1000);
-                       setTimeout(function () {
-                           window.location.href = window.location.href;
-                       }, 300);
-                   }
-               },
-               complete: function () {
-                   $("#load").remove();
-                   $btn.button('reset');
-                   form[0].reset();
-                   $('#addModal').modal('hide');
-               }
-           });
-           return false;
-       }
+    <script>
+        $(function () {
+            $('.addcate').click(function () {
+                $('#addModalLabel').html('添加分类');
+                $('#modif').val('add');
+                $('#addModal').find('input[name="ID"]').val('');
+                $('#addModal').modal('show');
+            });
+            $('.editbtn').click(function () {
+                var _url = $(this).attr('url');
+                ajaxget(_url, setmodal);
+            });
+           
+        });
+        function setmodal(data) {
+            if (!data) {
+                showerrormsg('网络连接失败', 100, 1000);
+                return false;
+            }
+            $('#addModalLabel').html('编辑分类');
+            $('#modif').val('update');
+            $('#addModal').find('input[name="ID"]').val(data.ID);
+            $('#Display').val(data.Display);
+            $('#Name').val(data.Name);
+            $('#addModal').modal('show');
+            $('#PID').find('option').each(function () {
+                if (parseInt($(this).val() == parseInt(data.PID))) {
+                    $(this).attr('selected', 'selected');
+                    return true;
+                }
+            });
+        }
+        function ajaxget(_url,reback) {
+            $.ajax({
+                type: 'post',
+                url: _url,
+                beforeSend: function () {
+                    loading();
+                },
+                error: function (request) {
+                    showerrormsg('网络连接失败', 100, 1000);
+                    return null;
+                }, success: function (data) {
+                    return reback(data);
+                },
+                complete: function () {
+                    $("#load").remove();
+                }
+            });
+        }
+        //异步提交表单
+        function ajaxsubmit() {
+            var form = $("form");
+            var $btn = form.find('button[type="submit"]').button('loading');
+            $.ajax({
+                type: form.attr("method"),
+                url: form.attr("action"),
+                data: form.serialize(),
+                beforeSend: function () {
+                    loading();
+                },
+                error: function (request) {
+                    showerrormsg('网络连接失败', 100, 1000);
+                    $btn.button('reset');
+                },
+                success: function (data) {
+                    if (data.status != 1) {
+                        showerrormsg(data.info, 100, 1000);
+                    }
+                    else {
+                        showsuccessmsg('操作成功', 100, 1000);
+                        form[0].reset();
+                        $('#addModal').modal('hide');
+                        setTimeout(function () {
+                            window.location.href = window.location.href;
+                        }, 300);
+                    }
+                },
+                complete: function () {
+                    $("#load").remove();
+                    $btn.button('reset');
+                }
+            });
+            return false;
+        }
     </script>
 }

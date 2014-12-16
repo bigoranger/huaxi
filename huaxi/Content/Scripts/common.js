@@ -94,7 +94,7 @@
 })
 function loading() {
     $("#load").remove();
-    $("body").append('<div  id="load" style="z-index:99999; position:fixed; left:45%; top:30%"><img src="loading.gif" /></div>');
+    $("body").append('<div  id="load" style="z-index:99999; position:fixed; left:45%; top:30%"><img src="/Content/img/loading.gif" /></div>');
 }
 function removeloading() {
     $("#load").remove();

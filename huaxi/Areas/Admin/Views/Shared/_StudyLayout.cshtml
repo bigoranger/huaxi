@@ -25,6 +25,7 @@
     <label>其他</label>
     <ul class="list-group">
         <a href="@Url.Action("CateManage")" class="list-group-item sideNav" select="CateManage">&nbsp分类管理</a>
-        <a href="@Url.Action("Index", new { status = -1 })" class="list-group-item sideNav" select="status=-1">&nbsp回收站</a>
+        <a href="@Url.Action("CateManage", new { status = -1 })" class="list-group-item sideNav" select="status=-1">&nbsp分类回收站</a>
+        <a href="@Url.Action("Index", new { status = -1 })" class="list-group-item sideNav" select="status=-1">&nbsp;文章回收站</a>
     </ul>
 </div>
