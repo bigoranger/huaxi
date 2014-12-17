@@ -15,22 +15,22 @@ namespace huaxi.Areas.Admin.Controllers
         //9.资源共享
         //10.培训信息
         int[] typeArr = { 7, 9, 10 };
-        public ActionResult Index(int type = 7, int page = 1, string title = null, int status = 0)
+        public ActionResult Index(int type = 0, int page = 1, string title = null, int status = 0)
         {
             GetCateList();
             List<string> ListWhere = new List<string>();
             string typeStr;
             string titleStr;
             string statusStr = "Status>-1";
-
-            if (Array.IndexOf(typeArr, type) < 0)
-                type = typeArr[0];
-
-            typeStr = "CateID=" + type;
-            ListWhere.Add(typeStr);
-
+            if (status == -1)
+            {
+                statusStr = "Status=-1";
+            }
+            else {
+                typeStr = "CateID=" + type;
+                ListWhere.Add(typeStr);
+            }
             ListWhere.Add(statusStr);
-
             if (title != null)
             {
                 titleStr = string.Format("Title like '%{0}%'", title);
@@ -76,34 +76,119 @@ namespace huaxi.Areas.Admin.Controllers
             ViewBag.ShareCate = CategoryModel.ListCateByID(typeArr[1], status).ToList();
             ViewBag.TrainningCate = CategoryModel.ListCateByID(typeArr[2], status).ToList();
         }
-
-        public ActionResult Create()
+        /// <summary>
+        /// 渲染添加学习视图
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public ActionResult Create(int type = 0)
         {
-            return View();
+            GetCateList();
+            if (type == 0)
+            {
+                List<Category> ls1 = (List<Category>)ViewBag.GuideCate;
+                ls1.AddRange((List<Category>)ViewBag.ShareCate);
+                ls1.AddRange((List<Category>)ViewBag.TrainningCate);
+                if (ls1.Count > 0)
+                {
+                    type = ls1[0].ID;
+                }
+                else {
+                    ArticleModel model = null;
+                    return View(model);
+                }
+            }
+            try
+            {
+                ArticleModel model = new ArticleModel();
+                model.Document = new DocumentModel();
+                model.Document.CateID = type;
+                model.Document.UserName = User.Identity.Name;
+                return View(model);
+            }
+            catch
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
-
+        /// <summary>
+       /// 添加[学习]
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(ArticleModel model)
+        public ActionResult Create(ArticleModel model, int type)
         {
-            return View();
+            string msg = "";
+            if (ModelState.IsValid && ArticleBLL.Insert(model, out msg))
+            {
+                return RedirectToAction("Index", new { type = type });
+            }
+            else
+            {
+                ModelState.AddModelError("", msg);
+                GetCateList();
+                return View();
+            }
         }
 
-        public ActionResult Delete()
+        public ActionResult Delete(string[] id, int status = -1, int type=0)
         {
-            return View();
+            if (id != null && id.Length > 0)
+            {
+                foreach (string i in id)
+                {
+                    ArticleBLL.Delete(Convert.ToInt32(i), status);
+                }
+
+            }
+            return RedirectToAction("Index", new { type = type });
+        }
+        public ActionResult Destroy(string[] id)
+        {
+            if (id != null && id.Length > 0)
+            {
+                foreach (string i in id)
+                {
+                    ArticleBLL.Destroy(Convert.ToInt32(i));
+                }
+            }
+            return RedirectToAction("Index", new { status = -1 });
         }
 
-        public ActionResult Edit()
+        /// <summary>
+        /// 渲染编辑文章view
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Edit(int id)
         {
-            return View();
+            GetCateList();
+            ArticleModel model = ArticleBLL.GetById(id);
+            return View(model);
         }
-
+        /// <summary>
+        /// 编辑文章
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(ArticleModel model)
         {
-            return View();
+            string msg = "";
+            if (ModelState.IsValid && ArticleBLL.Update(model, out msg))
+            {
+                return RedirectToAction("Index", new { type = model.Document.CateID });
+            }
+            else
+            {
+                ModelState.AddModelError("", msg);
+                GetCateList();
+                return View();
+            }
         }
         /// <summary>
         /// 增加或修改分类

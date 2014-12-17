@@ -4,14 +4,14 @@
     <ul class="list-group">
         @foreach (huaxi.Category cate in (List<huaxi.Category>)ViewBag.GuideCate)
         {
-            <a href="@Url.Action("Index", new { type = @cate.ID })" class="list-group-item sideNav" select="type = @cate.ID"> @cate.Display</a>
+            <a href="@Url.Action("Index", new { type = @cate.ID,pt=7 })" class="list-group-item sideNav" select="type=@cate.ID"> @cate.Display</a>
         }
     </ul>
     <label>资源共享</label>
     <ul class="list-group">
         @foreach (huaxi.Category cate in (List<huaxi.Category>)ViewBag.ShareCate)
         {
-            <a href="@Url.Action("Index", new { type = @cate.ID })" class="list-group-item sideNav" select="type = @cate.ID"> @cate.Display</a>
+            <a href="@Url.Action("Index", new { type = @cate.ID, pt = 9})" class="list-group-item sideNav" select="type=@cate.ID"> @cate.Display</a>
         }
         <a href="#" class="list-group-item sideNav" select="type = #">未审核</a>
     </ul>
@@ -19,7 +19,7 @@
     <ul class="list-group">
         @foreach (huaxi.Category cate in (List<huaxi.Category>)ViewBag.TrainningCate)
         {
-            <a href="@Url.Action("Index", new { type = @cate.ID })" class="list-group-item sideNav" select="type = @cate.ID"> @cate.Display</a>
+            <a href="@Url.Action("Index", new { type = @cate.ID, pt = 10})" class="list-group-item sideNav" select="type=@cate.ID"> @cate.Display</a>
         }
     </ul>
     <label>其他</label>

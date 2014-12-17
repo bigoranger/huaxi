@@ -56,9 +56,12 @@
                             <td>@v.Display</td>
                             <td>@v.Name</td>
                             <td>
-                                <button class="btn btn-info editbtn" url="@Url.Action("GetCateById", new { id = @v.ID })">
-                                    编辑
-                                </button>
+                                @if (Convert.ToInt32(Request["status"]) != -1)
+                                {
+                                    <button class="btn btn-info editbtn" url="@Url.Action("GetCateById", new { id = @v.ID })">
+                                        编辑
+                                    </button>
+                                }
                             </td>
                         </tr>
                     }
@@ -73,9 +76,12 @@
                             <td>@v.Display</td>
                             <td>@v.Name</td>
                             <td>
-                                <button class="btn btn-info editbtn" url="@Url.Action("GetCateById", new { id = @v.ID })">
-                                    编辑
-                                </button>
+                                @if (Convert.ToInt32(Request["status"]) != -1)
+                                {
+                                    <button class="btn btn-info editbtn" url="@Url.Action("GetCateById", new { id = @v.ID })">
+                                        编辑
+                                    </button>
+                                }
                             </td>
                         </tr>
                     }  @foreach (var v in ViewBag.ListTrainningCate)
@@ -89,9 +95,12 @@
                             <td>@v.Display</td>
                             <td>@v.Name</td>
                             <td>
-                                <button class="btn btn-info editbtn" url="@Url.Action("GetCateById", new { id = @v.ID })">
-                                    编辑
-                                </button>
+                                @if (Convert.ToInt32(Request["status"]) != -1)
+                                {
+                                    <button class="btn btn-info editbtn" url="@Url.Action("GetCateById", new { id = @v.ID })">
+                                        编辑
+                                    </button>
+                                }
                             </td>
                         </tr>
                     }
@@ -121,7 +130,7 @@
                             <select class="form-control none-radius" id="PID" name="PID">
                                 @foreach (var v in ViewBag.Cate)
                                 {
-                                    <option  value="@v.ID">@v.Display</option>
+                                    <option value="@v.ID">@v.Display</option>
                                 }
                             </select>
                         </div>
@@ -160,7 +169,7 @@
                 var _url = $(this).attr('url');
                 ajaxget(_url, setmodal);
             });
-           
+
         });
         function setmodal(data) {
             if (!data) {
@@ -180,7 +189,7 @@
                 }
             });
         }
-        function ajaxget(_url,reback) {
+        function ajaxget(_url, reback) {
             $.ajax({
                 type: 'post',
                 url: _url,

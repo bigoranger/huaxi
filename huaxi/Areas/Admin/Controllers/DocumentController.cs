@@ -126,9 +126,7 @@ namespace huaxi.Areas.Admin.Controllers
                 }
 
             }
-
             return RedirectToAction("Index", new { type = type });
-
         }
 
         //彻底删除

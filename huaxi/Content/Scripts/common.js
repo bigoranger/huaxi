@@ -1,12 +1,6 @@
 ﻿$(function () {
     /*navselect*/
-    $(".sideNav").each(function () {
-        if (window.location.search.toLocaleLowerCase().indexOf($(this).attr('select').toLocaleLowerCase(), 1) > 0) {
-            $(".sideNav").parent().removeClass('active');
-            $(this).parent().addClass('active');
-            return false;
-        }
-    });
+
 
     /*navselect*/
     $(".topNav").each(function () {
@@ -162,7 +156,7 @@ $(document).ready(function () {
 
     /* 侧边栏导航切换 */
     $(".list-group").find("a").each(function () {
-        if (window.location.href.toLocaleLowerCase().indexOf($(this).attr("href").replace(".html", "").toLocaleLowerCase(), 1) > 0) {
+        if (window.location.href.toLocaleLowerCase().indexOf($(this).attr("select").replace(".html", "").toLocaleLowerCase(), 1) > 0) {
             $(".list-group").children().removeClass("active");
             $(this).addClass("active");
         }

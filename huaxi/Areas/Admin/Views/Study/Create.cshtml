@@ -1,0 +1,62 @@
+﻿@model huaxi.Areas.Admin.Models.ArticleModel
+
+@{
+    ViewBag.Title = "添加学习";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@if (Model == null) { 
+    <script>
+        alert("没有可用的分类，请先创建分类！");
+        window.location.href = "@Url.Action("CateManage")";
+    </script>
+}
+@Html.Partial("_StudyLayout")
+<div class="col-md-9">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            @ViewBag.Title 作者:@User.Identity.Name
+            <a href="@Url.Action("Index", new { type = @HttpContext.Current.Request["type"] })" type="button">&nbsp;&nbsp;返回</a>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(m => m.Document.CateID)
+                @Html.HiddenFor(m => m.Document.UserName)
+                @Html.Hidden("type")
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Document.Title, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Document.Title, new { @class = "form-control none-radius", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Document.Title)
+                    </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BeFrom, new { @class = "" })
+                            @Html.TextBoxFor(model => model.BeFrom, new { @class = "form-control none-radius" })
+                            @Html.ValidationMessageFor(model => model.BeFrom)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Document.Description, new { @class = "" })
+                            @Html.TextAreaFor(model => model.Document.Description, new { @class = "form-control none-radius" })
+                            @Html.ValidationMessageFor(model => model.Document.Description)
+                        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Contents, new { @class = "" })
+                        @Html.TextAreaFor(model => model.Contents, new { @class = "form-control none-radius", style = "height:300px" })
+                        @Html.ValidationMessageFor(model => model.Contents)
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">发布</button>
+                    <button type="reset" class="btn btn-danger">重置</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script src="~/Content/Scripts/kindeditor/kindeditor-min.js"></script>
+<script src="~/Content/Scripts/kindeditor/lang/zh_CN.js"></script>
+@section Js{
+    <script src="~/Content/Scripts/KindEditor.js"></script>
+}
