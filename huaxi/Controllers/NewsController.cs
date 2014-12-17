@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace huaxi.Areas.Admin.Controllers
+namespace huaxi.Controllers
 {
-    public class TakeoutController : Controller
+    public class NewsController : Controller
     {
         //
-        // GET: /Admin/Takeout/
+        // GET: /News/
 
         public ActionResult Index()
         {

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<huaxi.Models.ViewTakeOutModel>
+@using HtmlPaginationBar;
+@{
+    ViewBag.Title = "外卖订餐";
+    Layout="~/Views/Shared/_Layout.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+<!--/span-->
+<div class="span9" id="content">
+    <div class="row-fluid">
+        <!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">@ViewBag.Title</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                        <div class="row">
+                            <div class="span6">
+                                <div id="example2_filter" class="dataTables_filter">
+                                    <label>
+                                        <input aria-controls="example2" type="text" name="title" placeholder="输入关键字按回车搜索" class="search-input">
+                                        <a class="sch-btn" href="javascript:;" id="search"  url="@Url.Action("Index", "Document", new { type = @HttpContext.Current.Request["type"], status = @HttpContext.Current.Request["status"] })"><i class="icon-search"></i></a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table aria-describedby="example2_info" class="table table-striped table-bordered dataTable" id="example2" border="0" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr role="row">
+                                    <th>编号</th>
+                                    <th>标题</th>
+                                    <th>描述</th>
+                                    <th>评论数</th>
+                                    <th>浏览数</th>
+                                    <th>标题</th>
+                                    <th>价格</th>
+                                    <th>描述</th>
+                                    <th>店家</th>
+                                    <th>电话</th>
+                                    <th>图片</th>
+                                    <th>地址</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Comment)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Views)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Display)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Contents)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Telephone)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Url)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="span6">
+                                <div id="example2_info" class="dataTables_info">当前为第 @ViewBag.StartNum 到 @ViewBag.EndNum 条 总共 @ViewBag.Count 条</div>
+                            </div>
+                            <div class="span6">
+                                <div class="dataTables_paginate paging_bootstrap pagination">
+                                    @Html.PaginationBar(new PaginationBarBilder(@Url.Action("Index") + "?page={0}", @ViewBag.PageCount, @ViewBag.Page))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /block -->
+    </div>
+</div>
